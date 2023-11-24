@@ -1,0 +1,7 @@
+Flask
+pandas
+numpy 
+scipy
+sklearn
+MySQL-python
+mysqlclient   
