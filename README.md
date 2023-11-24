@@ -1,4 +1,4 @@
-> Author: Andrea Grandi
+> Authors: Andrea Grandi, Luca Montagnani, Daniele Vellani
 >
 # iot_project
 IoT project for "IOT_and_3D_Intelligent_System" 
