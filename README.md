@@ -1,4 +1,4 @@
-> Author: Andrea Grandi
+> Author: Andrea Grandi, Luca Montagnani, Daniele Vellani
 >
 # iot_project
 IoT project for "IOT_and_3D_Intelligent_System" 
@@ -6,7 +6,7 @@ IoT project for "IOT_and_3D_Intelligent_System"
 ## List of components
 
 #### *Hardware components*
-* Arduino uno / Arduino nano / ESP32
+* Arduino uno / ESP32
 * Bluetooth module
 * Accelerometer and gyroscope
 * Microphone
@@ -26,8 +26,4 @@ IoT project for "IOT_and_3D_Intelligent_System"
 * Soldering iron
 * Soldering wire
 * Hot glue gun
----
-## Diagrams:
 
-
----
