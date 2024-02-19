@@ -1,0 +1,10 @@
+{
+  "arduino_serial_config": {
+    "device": "/dev/cu.usbmodem21301",
+    "baudrate": 115200
+  },
+  "esp32_serial_config": {
+    "device": "/dev/cu.usbserial-0001", 
+    "baudrate": 9600
+  }
+}
