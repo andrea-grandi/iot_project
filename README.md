@@ -1,5 +1,3 @@
-
-
 # Sign Gloves
 
 *IoT and 3D Intelligent Systems prokect 2023/2024*
