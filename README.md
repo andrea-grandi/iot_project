@@ -29,6 +29,6 @@ This system is capable of predicting hazardous situations and then alerting prev
 
 ## Credits
 
-Andrea Grandi: [@andrea-grandi](https://github.com/andrea-grandi)
-Luca Montagnani: [@montaoo](https://github.com/montaooo)
-Daniele Vellani: [@franzione1](https://github.com/franzione1)
+- Andrea Grandi: [@andrea-grandi](https://github.com/andrea-grandi)
+- Luca Montagnani: [@montaoo](https://github.com/montaooo)
+- Daniele Vellani: [@franzione1](https://github.com/franzione1)
