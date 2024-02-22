@@ -21,7 +21,7 @@ The smartphone client manages the display of hazard messages in the area. Throug
 
 ## Web App
 
-The Web App is the centre of this system. The backend part manages the database and all the requests, while in the frontend is possible to manage ones dispositives and remotely activate them.
+The Web App is the centre of this system. The backend part manages the database and all the requests, while in the frontend is possible to manage ones dispositives.
 
 ## Predictions
 
