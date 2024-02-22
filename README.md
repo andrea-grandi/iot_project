@@ -15,6 +15,10 @@
 - Comunications: HTTP/MQTT
 - Database: SQLite
 
+## Control Unit 
+
+The control unit manages the sensor and actuator components of the glove. The control unit is also responsible for bridging between Arduino and the cloud.
+
 ## Android App
 
 The smartphone client manages the display of hazard messages in the area. Through a registration interface, we can add new gloves.
