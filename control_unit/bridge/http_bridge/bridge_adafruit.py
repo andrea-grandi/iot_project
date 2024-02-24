@@ -1,91 +1,71 @@
+import json
 import serial
-import serial.tools.list_ports
 import requests
-import configparser
+import time
+import subprocess
 
+def leggi_configurazione(file_config):
+    with open(file_config, 'r') as f:
+        configurazione = json.load(f)
+    return configurazione
 
-class Bridge():
+def leggi_dati_seriale(ser):
+    dato_seriale = ser.readline().decode().strip()
+    print(f"Dato dalla seriale: {dato_seriale}")
 
-	def __init__(self):
-		self.config = configparser.ConfigParser()
-		self.config.read('config.ini')
-		self.setupSerial()
+    # Estrai i valori dalla stringa seriale
+    values = dato_seriale.split(',')
+    
+    # Verifica la presenza dei valori attesi
+    if len(values) == 5:
+        # Creazione del dizionario con i valori letti
+        if values[0] == "INVALID" or values[1] == "INVALID":
+            data_dict = {'value': 0, 'lat': 0, 'lon': 0}
+        else:
+            data_dict = {'value': 1, 'lat': float(values[0]), 'lon': values[1]}
+        return data_dict
+    else:
+        print("Errore: La stringa seriale non contiene i valori attesi.")
+        return None
 
-	def setupSerial(self):
-		# open serial port
-		self.ser = None
+def invia_data_ad_adafruit(device, baudrate, url, key):
+    try:
+        ser = serial.Serial(device, baudrate)
+        print(f"Connessione alla seriale {device} avvenuta con successo.")
+        
+        while True:
+            # Leggi i dati dalla seriale e crea il dizionario
+            data_dict = leggi_dati_seriale(ser)
 
-		if not self.config.getboolean("Serial","UseDescription", fallback=False):
-			self.portname = self.config.get("Serial","PortName", fallback="/dev/cu.usbmodem21301")
-		else:
-			print("list of available ports: ")
-			ports = serial.tools.list_ports.comports()
+            if data_dict:
+                # Costruisci il comando curl_command
+                curl_command = f'curl -H "Content-Type: application/json" -d \'{{"value": {data_dict["value"]}, "lat": {data_dict["lat"]}, "lon": "{data_dict["lon"]}"}}\' -H "X-AIO-Key: {key}" {url}'
 
-			for port in ports:
-				print (port.device)
-				print (port.description)
-				if self.config.get("Serial","PortDescription", fallback="arduino").lower() \
-						in port.description.lower():
-					self.portname = port.device
+                # Esegui il comando curl
+                subprocess.run(curl_command, shell=True)
 
-		try:
-			if self.portname is not None:
-				print ("connecting to " + self.portname)
-				self.ser = serial.Serial(self.portname, 9600, timeout=0)
-		except:
-			self.ser = None
+            time.sleep(10)  # Attendiamo 10 secondi prima di leggere il prossimo dato
 
-		# self.ser.open()
+    except Exception as e:
+        print(f"Errore: {e}")
+    finally:
+        if ser.is_open:
+            ser.close()
+            print("Connessione alla seriale chiusa.")
 
-		# internal input buffer from serial
-		self.inbuffer = []
+def http_bridge():
+    config_file = "config.json"
+    configurazione = leggi_configurazione(config_file)
 
-	def postdata(self, i, val):
-		if i > 0:
-			return
-		url = self.config.get("HTTPAIO","Url") + "/data"
-		myobj = {'value': val}
-		headers = {'X-AIO-Key': self.config.get("HTTPAIO","X-AIO-Key") }
-		print ("> Sending to " + url)
+    esp32_config = configurazione.get("esp32_serial_config", {})
+    device = esp32_config.get("device")
+    baudrate = esp32_config.get("baudrate")
 
-		x = requests.post(url, data=myobj, headers=headers)
-		print(x.json())
+    adafruit_config = configurazione.get("adafruit_config", {})
+    url = adafruit_config.get("url")
+    key = adafruit_config.get("key")
 
-	def loop(self):
-		# infinite loop for serial managing
-		#
-		while (True):
-			#look for a byte from serial
-			if not self.ser is None:
-
-				if self.ser.in_waiting>0:
-					# data available from the serial port
-					lastchar=self.ser.read(1)
-
-					if lastchar==b'\xfe': #EOL
-						print("\nValue received")
-						self.useData()
-						self.inbuffer =[]
-					else:
-						# append
-						self.inbuffer.append (lastchar)
-
-	def useData(self):
-		# I have received a packet from the serial port. I can use it
-		if len(self.inbuffer)<3:   # at least header, size, footer
-			return False
-		# split parts
-		if self.inbuffer[0] != b'\xff':
-			return False
-
-		numval = int.from_bytes(self.inbuffer[1], byteorder='little')
-
-		for i in range (numval):
-			val = int.from_bytes(self.inbuffer[i+2], byteorder='little')
-			strval = "Sensor %d: %d " % (i, val)
-			print(strval)
-			self.postdata(i, val)
-
-if __name__ == '__main__':
-	br=Bridge()
-	br.loop()
+    if device and baudrate and url and key:
+        invia_data_ad_adafruit(device, baudrate, url, key)
+    else:
+        print("Configurazione incompleta. Assicurati di fornire tutti i parametri necessari nel file config.json.")

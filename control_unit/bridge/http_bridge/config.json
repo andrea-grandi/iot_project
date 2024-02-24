@@ -1,0 +1,10 @@
+{
+   "esp32_serial_config": {
+      "device": "/dev/cu.usbserial-0001",
+      "baudrate": 9600
+   },
+   "adafruit_config": {
+      "url": "https://io.adafruit.com/api/v2/andreagrandi/feeds/gps/data",
+      "key": "aio_aEnT01Uzaxr06uUDgSdztPcVdPYc"
+   }
+}
