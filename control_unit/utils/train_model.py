@@ -29,7 +29,7 @@ print(f'Accuracy: {accuracy}')
 
 # Salva il modello addestrato
 import joblib
-joblib.dump(model, 'trained_model.joblib')
+joblib.dump(model, 'model/trained_model.joblib')
 
 """
 import pandas as pd

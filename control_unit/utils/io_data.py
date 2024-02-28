@@ -5,7 +5,7 @@ import csv
 ser = serial.Serial('/dev/cu.usbmodem21201', 115200)  # Sostituire 'COMx' con la porta seriale corretta
 
 # Aprire un file CSV in modalità di scrittura
-with open('dati.csv', 'w', newline='') as file:
+with open('dataset/test.csv', 'w', newline='') as file:
     # Creare un oggetto scrittore CSV
     writer = csv.writer(file)
 
