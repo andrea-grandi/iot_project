@@ -21,6 +21,14 @@ def get_latest_gps_coordinates():
 def index():
     return render_template('index.html')
 
+@app.route('/map')
+def map():
+    return render_template('map.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 # Endpoint per ottenere i dati GPS dal database
 @app.route('/gps_data')
 def gps_data():
