@@ -1,7 +1,7 @@
 <div align="center">
 
-![Made with Doom Emacs](https://img.shields.io/github/tag/doomemacs/doomemacs.svg?style=flat-square&label=release&color=58839b)
-![Latest commit](https://img.shields.io/github/last-commit/doomemacs/doomemacs/master?style=flat-square)
+![Release](https://img.shields.io/github/v/tag/andrea-grandi/iot_project.svg?sort=semver)
+![Latest commit](https://img.shields.io/github/last-commit/andrea-grandi/iot_project)
 
 # Sign Gloves
 
