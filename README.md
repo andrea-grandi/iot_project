@@ -1,17 +1,24 @@
+<div align="center">
+
+![Made with Doom Emacs](https://img.shields.io/github/tag/doomemacs/doomemacs.svg?style=flat-square&label=release&color=58839b)
+![Latest commit](https://img.shields.io/github/last-commit/doomemacs/doomemacs/master?style=flat-square)
+
 # Sign Gloves
 
 *IoT and 3D Intelligent Systems project 2023/2024*
 
 **Sign Glove** is a sistem that convert sign language in audio for interactions between deaf people and non-deaf people. Through the use of sensors (flex sensors, microphone, GPS, etc.), it is able to translate sign language. Additionally, it can detect potentially hazardous situations in the environment (such as ambulance sounds, loud noises, or signals of distress) and alert others through the gloves.
 
+</div>
+
 ## Structure
 
 - Controller: Arduino/Esp32 - C++
-- Android App: 
-- Web App: 
+- Android App: MIT App Inventor
+- Web App: Flask - Python
 - Hazard Prediction: 
 - Comunications: HTTP/MQTT
-- Database: SQLite
+- Database: SQLite/CouchDB
 
 ## Control Unit 
 
