@@ -16,7 +16,7 @@
 - Controller: Arduino/Esp32 - C++
 - Android App: MIT App Inventor
 - Web App: Flask - Python
-- Hazard Prediction: 
+- Warning Prediction: TODO 
 - Comunications: HTTP/MQTT
 - Database: SQLite/CouchDB
 
