@@ -13,7 +13,7 @@
 
 </div>
 
-![main scheme](images/diagram.png))
+![main scheme](images/diagram.png)
 
 ## Structure
 
@@ -33,7 +33,7 @@ The control unit manages the sensor and actuator components of the glove. The co
 
 Example of hand positions for lis sign language:
 
-![letters](images/letters.png))
+![letters](images/letters.png)
 
 ---
 #### Results
