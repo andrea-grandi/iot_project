@@ -5,7 +5,7 @@
 
 # Sign Gloves
 
-![logo](/Users/andreagrandi/Projects/iot_project/images/guanto_logo.png)
+![logo](images/guanto_logo.png)
 
 *IoT and 3D Intelligent Systems project 2023/2024*
 
