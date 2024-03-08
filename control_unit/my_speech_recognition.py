@@ -26,16 +26,19 @@ class SpeechRecognitionSystem:
         return self.serial_data
 
     def serial_data(self):
-        data = self.ser.readline().decode('utf-8').strip().split(',')
-
-        if len(data) == 5:
-            if data[0] == "INVALID" or data[1] == "INVALID":
-                data_dict = {'value': 0, 'lat': 0, 'lon': 0}
+        try:
+            data = self.ser.readline().decode('utf-8').strip().split(',')
+            if len(data) == 5:
+                if data[0] == "INVALID" or data[1] == "INVALID":
+                    data_dict = {'value': 0, 'lat': 0, 'lon': 0}
+                else:
+                    data_dict = {'value': 1, 'lat': data[0], 'lon': data[1]}
+                return data_dict
             else:
-                data_dict = {'value': 1, 'lat': float(data[0]), 'lon': data[1]}
-            return data_dict
-        else:
-            print("Errore: La stringa seriale non contiene i valori attesi.")
+                print("Errore: La stringa seriale non contiene i valori attesi.")
+                return None
+        except UnicodeDecodeError as e:
+            print("Error decoding serial data:", e)
             return None
 
     def loop(self):
