@@ -5,11 +5,15 @@
 
 # Sign Gloves
 
+![logo](/Users/andreagrandi/Projects/iot_project/images/guanto_logo.png)
+
 *IoT and 3D Intelligent Systems project 2023/2024*
 
 **Sign Glove** is a sistem that convert sign language in audio for interactions between deaf people and non-deaf people. Through the use of sensors (flex sensors, microphone, GPS, etc.), it is able to translate sign language. Additionally, it can detect potentially hazardous situations in the environment (such as ambulance sounds, loud noises, or signals of distress) and alert others through the gloves.
 
 </div>
+
+![main scheme](/Users/andreagrandi/Projects/iot_project/images/diagram.png))
 
 ## Structure
 
@@ -23,6 +27,23 @@
 ## Control Unit 
 
 The control unit manages the sensor and actuator components of the glove. The control unit is also responsible for bridging between Arduino and the cloud.
+
+---
+#### Lis Sign Language
+
+Example of hand positions for lis sign language:
+
+![letters](/Users/andreagrandi/Projects/iot_project/images/letters.png))
+
+---
+#### Results
+
+For the control unit part, we have achieved a fairly high accuracy. This allows the glove to translate with high precision
+
+![confusion_matrix](/Users/andreagrandi/Projects/iot_project/images/confusion_matrix.png)
+
+![metrics](/Users/andreagrandi/Projects/iot_project/images/metrics.png)
+
 
 ## Android App
 
