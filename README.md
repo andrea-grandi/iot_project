@@ -13,7 +13,7 @@
 
 </div>
 
-![main scheme](/Users/andreagrandi/Projects/iot_project/images/diagram.png))
+![main scheme](images/diagram.png))
 
 ## Structure
 
@@ -33,16 +33,16 @@ The control unit manages the sensor and actuator components of the glove. The co
 
 Example of hand positions for lis sign language:
 
-![letters](/Users/andreagrandi/Projects/iot_project/images/letters.png))
+![letters](images/letters.png))
 
 ---
 #### Results
 
 For the control unit part, we have achieved a fairly high accuracy. This allows the glove to translate with high precision
 
-![confusion_matrix](/Users/andreagrandi/Projects/iot_project/images/confusion_matrix.png)
+![confusion_matrix](images/confusion_matrix.png)
 
-![metrics](/Users/andreagrandi/Projects/iot_project/images/metrics.png)
+![metrics](images/metrics.png)
 
 
 ## Android App
