@@ -7,7 +7,7 @@ import requests
 
 # ESP
 
-server_ip = "http://admin:cacdga1302@89.168.18.2/iot_project"
+server_ip = ""
 
 class SpeechRecognitionSystem:
     
