@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPS Map</title>
+
+    <!-- Leaflet CSS file -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         body {
@@ -40,36 +42,108 @@
         <!-- <a href="#map">Map</a> -->
         <!-- Aggiungi altre voci del menu qui -->
     </div>
+
+    <!-- Contenitore per la mappa -->
     <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+     
+    <!-- Leaflet JavaScript file -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+    
     <script>
-        var map = L.map('map').setView([44.647128, 10.925226], 13); // Coordinate di Modena
-        var marker;
+        if(navigator.geolocation){
+            // Inizializzazione della mappa alla posizione corrente (se disponibile)
+            navigator.geolocation.getCurrentPosition(function(position){
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
+                createMap(lat, lon, 15);
+            }, function(error){
+                createMap(44.647128, 10.925226, 13);
+            });
+        }
+        else {
+            // Inizializzazione della mappa alle coordinate di Modena
+            createMap(44.647128, 10.925226, 13);
+        }
+        
+        // Funzione per creare la mappa e tutte le sue funzioni
+        function createMap(lat, lon, zoom){
+            var map = L.map('map').setView([lat, lon], zoom);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+        
 
-        // Funzione per caricare i dati GPS dal server e aggiungere un marker sulla mappa
-        function loadgpsdata() {
-          fetch('/gps_data')
-          .then(response => response.json())
-          .then(data => {
-            if (data.lat && data.lon) { // Controlla se lat e lon sono presenti
-              L.marker([data.lat, data.lon]).addTo(map);
+            var circles = [] // Variabile per immagazzinare tutti i cerchi creati
+
+            // Funzione che crea un nuovo cerchio ad ogni clic attraverso "e.latlng"
+            function onMapClick(e){
+                // Controllo che il nuovo cerchio non si sovrapponga ad altri già esistenti
+                var overlap = circles.some(function(circle){
+                    var distance = circle.getLatLng().distanceTo(e.latlng);
+                    return distance < circle.getRadius() + 15
+                })
+            
+                // Richiesta all'utente di inserire una descrizione al cerchio creato    
+                var description = prompt('Inserisci una descrizione per questo cerchio:');
+            
+                if(!overlap && description){
+                    // Creazione nuovo cerchio
+                    var circle = L.circle([e.latlng.lat, e.latlng.lng], {
+                        color: 'red',
+                        fillOpacity: 0.5,
+                        radius: 55
+                    }).addTo(map);
+                    circle.bindPopup(description);
+                    circles.push(circle); // Aggiungo il nuovo cerchio all'array
+
+                    // Rimuove i cerchi dopo 30 secondi
+                    setTimeout(function() {
+                        map.removeLayer(circle);
+                        var index = circles.indexOf(circle);
+                        if(index !== -1){
+                            circles.splice(index, 1); // Rimuovo il cerchio dall'array
+                        }
+                    }, 30000)
+                }
+                else if(!description){
+                    alert('Descrizione non valida!')
+                }
+                else{
+                    alert('Posizione già marcata!')
+                }
             }
-          });
-        }
 
-        // Funzione per caricare i dati GPS dal server e aggiornare automaticamente ogni 10 secondi
-        function updateGPSData() {
-            loadgpsdata();
-            setTimeout(updateGPSData, 10000); // Ricarica i dati ogni 10 secondi
-        }
+            map.on('click', onMapClick);    
 
-        // Avvia il caricamento automatico dei dati GPS
-        updateGPSData();
+
+            var receivedCoordinates = new Set();
+            // Funzione per caricare i dati GPS dal server e aggiungere un marker sulla mappa
+            function loadgpsdata() {
+                fetch('/gps_data')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(coordinate => {  // Itero per tutti i dati nel database
+                        if(!receivedCoordinates.has(coordinate.lat + ',' + coordinate.lon)){
+                            receivedCoordinates.add(coordinate.lat + ',' + coordinate.lon);
+                        }
+                        L.marker([coordinate.lat, coordinate.lon]).addTo(map);
+                    })
+                }) 
+            }
+
+            // Funzione per caricare i dati GPS dal server e aggiornare automaticamente ogni 10 secondi
+            function updateGPSData() {
+                loadgpsdata();
+                setTimeout(updateGPSData, 10000); // Ricarica i dati ogni 10 secondi
+            }
+
+            // Avvia il caricamento automatico dei dati GPS
+            updateGPSData();
+        }
     </script>
 </body>
 </html>
