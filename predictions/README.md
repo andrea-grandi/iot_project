@@ -1,1 +1,1 @@
-N. B. Ho committato tutto. C'è un problema, ho cambiato parecchie cose, sono tornato a fare con un kmeans. Ho provato a calcolare l'accuracy nei predict che risulta 0.0 e devo capirne il motivo
+Ho sostituito il clustering con un modello di classificazione. Il clustering su quel genere di dati era impossibile ottenesse accuracy elevate. Attualmente con un Random Forest mi aggiro intorno a un 20% di accuracy, ora sto provando a lavorare sui dati per ottenere dei risultati più consistenti. 
