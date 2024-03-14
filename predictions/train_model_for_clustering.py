@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 # Carica il dataset
-df = pd.read_csv('train/train_positions_dataset_modena.csv')
+df = pd.read_csv('train_positions_dataset_modena.csv')
 
 # Seleziona le colonne per il clustering
 X_scaled = df[['Latitudine', 'Longitudine']]
