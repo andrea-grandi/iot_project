@@ -1,34 +1,45 @@
 import pandas as pd
 from prophet import Prophet
 import plotly.express as px
+from datetime import datetime as dt
+from dateutil.relativedelta import relativedelta
 
+class Prediction():
+    def load_dataset(self, dataset):
+        try:
+            with open(dataset) as file:
+                df = pd.read_csv(file, sep=',')
+                df['ds'] = pd.to_datetime(df['Data'])
+                df = df[['ds', 'Pericolosita']]  
+                df.rename(columns={'Pericolosita': 'y'}, inplace=True) 
+        except FileNotFoundError:
+            print("File not found")
+            return None
+        
+        return df
+    
+    def make_prediction(self, df, time_dataset):
+        model = Prophet(daily_seasonality=True)
+        model.add_country_holidays(country_name='IT')
+        model.fit(df)
+        
+        future = pd.DataFrame({'ds': pd.date_range(start=df['ds'].iloc[0], periods=30)})  
+        forecast = model.predict(future)
+        forecast[['yhat']] = forecast[['yhat']]#.round(0).astype('int32')
+        pred_df = forecast[['ds', 'yhat']].rename(columns={'yhat': 'y'})
 
-data = pd.read_csv("dataset_test.csv")
+        return pred_df
 
-data['ds'] = pd.to_datetime(data['Data'])
-
-model_lat = Prophet()
-model_lat.fit(data[["ds", "Latitudine"]].rename(columns={"Latitudine": "y", "ds": "ds"}))
-
-model_lon = Prophet()
-model_lon.fit(data[["ds", "Longitudine"]].rename(columns={"Longitudine": "y", "ds": "ds"}))
-
-model_pericolosita = Prophet()
-model_pericolosita.fit(data[["ds", "Latitudine", "Longitudine", "Pericolosita"]].rename(columns={"Pericolosita": "y", "ds": "ds"}))
-
-future = model_lat.make_future_dataframe(periods=365)
-#future = future[future['ds'].dt.year <= 2025]
-
-pred_lat = model_lat.predict(future)
-pred_lon = model_lon.predict(future)
-pred_pericolosita = model_pericolosita.predict(future)
-
-fig_lat = px.line(pred_lat, x='ds', y='trend', title='Linea di tendenza per latitudine')
-fig_lon = px.line(pred_lon, x='ds', y='trend', title='Linea di tendenza per longitudine')
-fig_pericolosita = px.line(pred_pericolosita, x='ds', y='trend', title='Linea di tendenza per pericolosità')
-
-fig_lat.show()
-fig_lon.show()
-fig_pericolosita.show()
-
+if __name__ == '__main__':
+    prediction = Prediction()
+    df = prediction.load_dataset("dataset_test.csv")
+    
+    if df is not None:
+        timestamp = dt.now()
+        time_dataset = timestamp.strftime('%Y-%m-%d')
+        
+        pred = prediction.make_prediction(df, time_dataset)
+        print(pred)
+        fig = px.line(pred, x='ds', y='y')
+        fig.show()
 
