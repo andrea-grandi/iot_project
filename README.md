@@ -20,7 +20,7 @@
 - Controller: Arduino/Esp32 - C++
 - Android App: MIT App Inventor
 - Web App: Flask - Python
-- Warning Prediction: TODO 
+- Prediction: Prophet 
 - Comunications: HTTP/MQTT
 - Database: SQLite/CouchDB
 
@@ -55,7 +55,11 @@ The Web App is the centre of this system. The backend part manages the database 
 
 ## Predictions
 
-This system is capable of predicting hazardous situations and then alerting prevention agencies, hospitals, or the police.
+This system is capable of predicting hazardous situations.
+
+![predictions](images/prophet_predictions.png)
+![predictions_trend](images/prophet_prediction_trend.png)
+
 
 ## Credits
 
