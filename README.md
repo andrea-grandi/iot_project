@@ -55,7 +55,7 @@ The Web App is the centre of this system. The backend part manages the database 
 
 ## Predictions
 
-This system is capable of predicting hazardous situations.
+This system is capable of predicting hazardous situations and time series with Prophet.
 
 ![predictions](images/prophet_predictions.png)
 ![predictions_trend](images/prophet_prediction_trend.png)
