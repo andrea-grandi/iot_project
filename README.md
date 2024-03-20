@@ -53,6 +53,9 @@ The smartphone client manages the display of hazard messages in the area. Throug
 
 The Web App is the centre of this system. The backend part manages the database and all the requests, while in the frontend is possible to manage ones dispositives.
 
+![web_home](images/web_home.png)
+![web_map](images/web_map.png)
+
 ## Predictions
 
 This system is capable of predicting hazardous situations and time series with Prophet.
