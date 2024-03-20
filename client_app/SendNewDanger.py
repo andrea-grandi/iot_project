@@ -9,7 +9,7 @@ usersLong = {}
 
 # Funzione per ottenere tutte le coordinate del DB
 def get_all_gps_coordinates():
-    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?include_docs=true"
+    url = ""
     response = requests.get(url)
     data = response.json()
     coordinates = []
@@ -27,7 +27,7 @@ def get_all_gps_coordinates():
 # Funzione per inserire le coordinate nel db
 def insert_coordinates_to_db(lat,lon):
     # Connessione al DB
-    couch = couchdb.Server('http://admin:cacdga1302@89.168.18.2/')
+    couch = couchdb.Server('')
     db = couch['iot_project']
 
     doc = {
