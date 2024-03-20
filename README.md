@@ -41,7 +41,6 @@ Example of hand positions for lis sign language:
 For the control unit part, we have achieved a fairly high accuracy. This allows the glove to translate with high precision
 
 ![confusion_matrix](images/confusion_matrix.png)
-
 ![metrics](images/metrics.png)
 
 
@@ -63,6 +62,7 @@ This system is capable of predicting hazardous situations and time series with P
 ![predictions](images/prophet.png)
 ![predictions_trend](images/prophet_trend.png)
 
+These graphs are just examples. The data in question refer to a single neighborhood in Modena and indicate the quantity of warnings for each day.
 
 ## Credits
 
