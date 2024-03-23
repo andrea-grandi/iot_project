@@ -39,7 +39,8 @@
 <body>
     <div id="menu">
         <a href="/">Home</a>
-        <a href="/about">About</a>
+        <!-- <a href="#map">Map</a> -->
+        <!-- Aggiungi altre voci del menu qui -->
     </div>
 
     <!-- Contenitore per la mappa -->
@@ -76,6 +77,7 @@
             }).addTo(map);
         
 
+            /*
             var circles = [] // Variabile per immagazzinare tutti i cerchi creati
 
             // Funzione che crea un nuovo cerchio ad ogni clic attraverso "e.latlng"
@@ -92,9 +94,9 @@
                 if(!overlap && description){
                     // Creazione nuovo cerchio
                     var circle = L.circle([e.latlng.lat, e.latlng.lng], {
-                        color: 'red',
-                        fillOpacity: 0.5,
-                        radius: 55
+                        color: 'blue',
+                        fillOpacity: 0.3,
+                        radius: 100
                     }).addTo(map);
                     circle.bindPopup(description);
                     circles.push(circle); // Aggiungo il nuovo cerchio all'array
@@ -117,7 +119,7 @@
             }
 
             map.on('click', onMapClick);    
-
+            */
 
             var receivedCoordinates = new Set();
             // Funzione per caricare i dati GPS dal server e aggiungere un marker sulla mappa
@@ -128,8 +130,13 @@
                     data.forEach(coordinate => {  // Itero per tutti i dati nel database
                         if(!receivedCoordinates.has(coordinate.lat + ',' + coordinate.lon)){
                             receivedCoordinates.add(coordinate.lat + ',' + coordinate.lon);
+                        
+                            L.circle([coordinate.lat, coordinate.lon], {
+                                color: 'blue',
+                                fillOpacity: 0.4,
+                                radius: 100
+                            }).addTo(map);
                         }
-                        L.marker([coordinate.lat, coordinate.lon]).addTo(map);
                     })
                 }) 
             }
