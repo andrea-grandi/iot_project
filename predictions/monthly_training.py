@@ -2,7 +2,7 @@ import joblib
 import schedule
 import time
 import requests
-from position_predict import Prediction 
+from prediction_test import Prediction 
 
 # Funzione per connettersi al database e estrarre i dati
 def get_all_gps_coordinates_and_train():
@@ -21,7 +21,7 @@ def get_all_gps_coordinates_and_train():
             coordinates.append({'y': y, 'ds': ds})
     
     model, pred_df = Prediction.make_prediction(coordinates)
-    save_model(model,  model_path = "trained_model.pkl")
+    save_model(model,  model_path = "trained_model.joblib")
     return model, pred_df
 
 
