@@ -6,7 +6,7 @@ from prediction_test import Prediction
 
 # Funzione per connettersi al database e estrarre i dati
 def get_all_gps_coordinates_and_train():
-    url = ""
+    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?include_docs=true"
     response = requests.get(url)
     data = response.json()
     coordinates = []
