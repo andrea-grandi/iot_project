@@ -25,12 +25,12 @@ def get_all_gps_coordinates():
             coordinates.append((lat,lon))
     return coordinates
 
-# Funzione per inserire le coordinate nel db
+# Funzione per inserire le coordinate nel DB
 def insert_coordinates_to_db(lat,lon):
     # Connessione al DB
     couch = couchdb.Server('http://admin:cacdga1302@89.168.18.2/')
     db = couch['iot_project']
-    current_date = datetime.date.today().isoformat()
+    current_date = datetime.date.today().isoformat() # Calcolo della data attuale
 
     doc = {
         'lat' : lat,
@@ -39,6 +39,7 @@ def insert_coordinates_to_db(lat,lon):
         'y' : 1
     }
 
+    # Salvataggio doc nel DB
     try:
         db.save(doc)
         print("Coordinate inserite nel database")
