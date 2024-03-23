@@ -3,13 +3,14 @@ import struct
 import requests
 import couchdb
 from geopy.distance import geodesic
+import datetime
 
 usersLat = {} 
 usersLong = {}
 
 # Funzione per ottenere tutte le coordinate del DB
 def get_all_gps_coordinates():
-    url = ""
+    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?include_docs=true"
     response = requests.get(url)
     data = response.json()
     coordinates = []
@@ -27,12 +28,15 @@ def get_all_gps_coordinates():
 # Funzione per inserire le coordinate nel db
 def insert_coordinates_to_db(lat,lon):
     # Connessione al DB
-    couch = couchdb.Server('')
+    couch = couchdb.Server('http://admin:cacdga1302@89.168.18.2/')
     db = couch['iot_project']
+    current_date = datetime.date.today().isoformat()
 
     doc = {
         'lat' : lat,
-        'lon' : lon
+        'lon' : lon,
+        'ds' : current_date,
+        'y' : 1
     }
 
     try:
@@ -73,16 +77,7 @@ def on_message(client, userdata, msg):
 
     # Controllo che siano state ricevute sia Latitudine che Longitudine
     if usersLat[username] is not None and usersLong[username] is not None:
-        for coordinate in dangerous_coordinates:
-            distance = distance_calc((usersLat[username], usersLong[username]), coordinate)
-            if distance < 500:
-                check = True
-                break
-        if check == False:
-            insert_coordinates_to_db(usersLat[username], usersLong[username])
-        else:
-            print("Troppo vicino")
-            
+        insert_coordinates_to_db(usersLat[username], usersLong[username])
         usersLat[username] = None
         usersLong[username] = None
 
