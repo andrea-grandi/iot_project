@@ -7,6 +7,15 @@ from geopy.distance import geodesic
 usersLat = {} 
 usersLong = {}
 
+# Funzione per mandare una richiesta web a IFTTT
+def send_request_IFTTT(username):
+    url = "https://maker.ifttt.com/trigger/send_danger/with/key/buRicbM1I8d6oIlQBiJbAh"
+    payload = {'value1': username}  # Includi l'identificatore del dispositivo come payload
+    response = requests.post(url, json=payload)
+    
+    if response.status_code == 200:
+        print("Notifica inviata con successo!")
+
 # Funzione per ottenere tutte le coordinate del DB
 def get_all_gps_coordinates():
     url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?include_docs=true"
@@ -64,6 +73,7 @@ def on_message(client, userdata, msg):
             distance = distance_calc((usersLat[username], usersLong[username]), coordinate)
             if distance < 500:
                 client.publish(username, 'Pericolo')
+                send_request_IFTTT(username)
                 usersLat[username] = None
                 usersLong[username] = None
                 break
