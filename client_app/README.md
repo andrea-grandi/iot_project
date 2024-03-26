@@ -1,4 +1,4 @@
 # Cient App
 
-- Client app creata attraverso MIT App Inventor. 
-- Connessione MQTT per inviare le coordinate del dispositivo mobile per notificare l'utente in caso di accesso ad una zona pericolosa, oppure invio di una nuova zona pericolosa (se possibile).
+- Client app creata attraverso MIT App Inventor. Utilizzo di un database specifico per le credenziali degli utenti, attraverso Google Sheets, con possibilità di cambiare password nel caso si fosse dimenticata.
+- Connessione MQTT per inviare le coordinate del dispositivo mobile periodicamente. Il Broker MQTT notifica l'utente in caso di ingresso in una zona pericolosa. Oppure, si può inviare la propria posizione autonomamente (attraverso un apposito bottone) indicandola come pericolosa. Le posizioni sono contenute in un database dedicato.
