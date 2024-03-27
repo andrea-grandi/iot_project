@@ -48,6 +48,12 @@ For the control unit part, we have achieved a fairly high accuracy. This allows 
 
 The smartphone client manages the display of hazard messages in the area. Through a registration interface, we can add new gloves.
 
+Main screen: 
+![main screen](client_app/images/main.jpg)
+
+Login screen:
+![login](client_app/images/account.jpg)
+
 ## Web App
 
 The Web App is the centre of this system. The backend part manages the database and all the requests, while in the frontend is possible to manage ones dispositives.
