@@ -6,6 +6,7 @@ from geopy.distance import geodesic
 # Dizionari per contenere Latitudine e Longitudine associate all'username
 usersLat = {} 
 usersLong = {}
+usersDanger = {}
 
 # Funzione per mandare una richiesta web a IFTTT
 def send_request_IFTTT(username):
@@ -50,7 +51,8 @@ def split_coordinates(msg):
         if username not in usersLat or username not in usersLong:
             usersLat[username] = None
             usersLong[username] = None
-        
+            usersDanger[username] = False
+
         if payload.startswith("Lat:"):
             usersLat[username] = float(payload.split(':')[1])
         else:
@@ -70,13 +72,22 @@ def on_message(client, userdata, msg):
     # Controllo che siano state ricevute sia Latitudine che Longitudine
     if usersLat[username] is not None and usersLong[username] is not None:
         for coordinate in dangerous_coordinates:
+            # Calcolo della distanza euclidea tra le coordinate ricevute e quelle nel DB
+            user_in_danger = False
             distance = distance_calc((usersLat[username], usersLong[username]), coordinate)
             if distance < 500:
-                client.publish(username, 'Pericolo')
-                send_request_IFTTT(username)
+                user_in_danger = True
+                client.publish(username, 'DANGER') # Invio all'utente il messaggio di pericolo
                 usersLat[username] = None
                 usersLong[username] = None
                 break
+        
+        if user_in_danger:
+            if not usersDanger[username]:
+                usersDanger[username] = True
+                send_request_IFTTT(username)
+        else:
+            usersDanger[username] = False
 
 # Indirizzo del broker MQTT
 mqttBroker = 'mqtt.eclipseprojects.io'
