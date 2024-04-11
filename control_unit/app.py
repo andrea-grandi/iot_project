@@ -8,7 +8,7 @@ import speech_recognition as sr
 
 config_file = 'config.json'
 
-def config_serial_arduino():
+def config_serial_arduino(config_file):
     try:
         with open(config_file, 'r') as config_file:
             config_data = json.load(config_file).get("arduino_serial_config", {})
@@ -30,7 +30,7 @@ def load_model():
         print("Error occurred while loading the model:", e)
         return None
 
-def config_serial_esp():
+def config_serial_esp(config_file):
     try:
         with open(config_file, 'r') as config_file:
             config_data = json.load(config_file).get("esp32_serial_config", {})
@@ -42,7 +42,7 @@ def config_serial_esp():
         print("Error occurred while configuring ESP32 serial connection:", e)
         return None
 
-def config_adafruit():
+def config_adafruit(config_file):
     try:
         with open(config_file, 'r') as config_file:
             return json.load(config_file).get("adafruit_config", {})
@@ -58,7 +58,7 @@ def init_recognizer():
 
 def main_predict():
     model = load_model()
-    ser = config_serial_arduino()
+    ser = config_serial_arduino(config_file)
     if model is None or ser is None:
         exit(1)
     gp = GesturePredictionSystem(ser, model)
@@ -66,8 +66,8 @@ def main_predict():
 
 def main_bridge():
     recognizer = init_recognizer()
-    ser = config_serial_esp()
-    adafruit = config_adafruit()
+    ser = config_serial_esp(config_file)
+    adafruit = config_adafruit(config_file)
     if recognizer is None or ser is None or adafruit is None:
         exit(1)
     sr_system = SpeechRecognitionSystem(ser, recognizer, adafruit)
