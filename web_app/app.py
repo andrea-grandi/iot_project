@@ -4,21 +4,9 @@ import socket
 
 app = Flask(__name__)
 
-#def get_latest_gps_coordinates():
-#    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?limit=1&descending=true"
-#    response = requests.get(url)
-#    data = response.json()
-#    latest_doc_id = data['rows'][0]['id']
-#    latest_doc_url = f"http://admin:cacdga1302@89.168.18.2/iot_project/{latest_doc_id}"
-#    response_latest_doc = requests.get(latest_doc_url)
-#    latest_doc_data = response_latest_doc.json()
-#    lat = latest_doc_data.get('lat')
-#    lon = latest_doc_data.get('lon')
-#    return {'lat': lat, 'lon': lon}
-
 # Funzione per ottenere i dati dal database
 def get_all_gps_coordinates():
-    url = ""
+    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?include_docs=true"
     response = requests.get(url)
     data = response.json()
     coordinates = []
@@ -26,14 +14,14 @@ def get_all_gps_coordinates():
     # Ciclo di tutte le righe del database
     for row in data['rows']:
         doc = row['doc']
-        # Verifica che il documento abbia delle coordinate
+        # Verifica che il documento abbia delle coordinate scritte in esso
         if 'lat' in doc and 'lon' in doc:
             lat = doc['lat']
             lon = doc['lon']
             coordinates.append({'lat': lat, 'lon': lon})
     return coordinates
 
-# Pagina principale 
+# Pagina principale
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -50,7 +38,6 @@ def about():
 @app.route('/gps_data')
 def gps_data():
     data = get_all_gps_coordinates()
-    print(str(data))
     return jsonify(data)
 
 if __name__ == '__main__':
