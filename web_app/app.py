@@ -5,11 +5,11 @@ import socket
 app = Flask(__name__)
 
 #def get_latest_gps_coordinates():
-#    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?limit=1&descending=true"
+#    url = ""
 #    response = requests.get(url)
 #    data = response.json()
 #    latest_doc_id = data['rows'][0]['id']
-#    latest_doc_url = f"http://admin:cacdga1302@89.168.18.2/iot_project/{latest_doc_id}"
+#    latest_doc_url = f""
 #    response_latest_doc = requests.get(latest_doc_url)
 #    latest_doc_data = response_latest_doc.json()
 #    lat = latest_doc_data.get('lat')
@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 # Funzione per ottenere i dati dal database
 def get_all_gps_coordinates():
-    url = ""
+    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?limit=1&descending=true"
     response = requests.get(url)
     data = response.json()
     coordinates = []
