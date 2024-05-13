@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Funzione per ottenere i dati dal database
 def get_all_gps_coordinates():
-    url = "http://admin:cacdga1302@89.168.18.2/iot_project/_all_docs?include_docs=true"
+    url = ""
     response = requests.get(url)
     data = response.json()
     coordinates = []
