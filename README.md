@@ -7,7 +7,7 @@
 
 ![logo](images/guanto_logo.png)
 
-*IoT and 3D Intelligent Systems project 2023/2024*
+_IoT and 3D Intelligent Systems project 2023/2024_
 
 **Sign Glove** is a system that convert sign language in audio for interactions between deaf people and non-deaf people. Through the use of sensors (flex sensors, microphone, GPS, etc.), it is able to translate sign language. Additionally, it can detect potentially hazardous situations in the environment (such as ambulance sounds, loud noises, or signals of distress) and alert others through the gloves.
 
@@ -20,15 +20,16 @@
 - Controller: Arduino/Esp32 - C++
 - Android App: MIT App Inventor
 - Web App: Flask - Python
-- Prediction: Prophet 
+- Prediction: Prophet
 - Comunications: HTTP/MQTT
 - Database: SQLite/CouchDB
 
-## Control Unit 
+## Control Unit
 
 The control unit manages the sensor and actuator components of the glove. The control unit is also responsible for bridging between Arduino and the cloud.
 
 ---
+
 #### Lis Sign Language
 
 Example of hand positions for lis sign language:
@@ -36,6 +37,7 @@ Example of hand positions for lis sign language:
 ![letters](images/letters.png)
 
 ---
+
 #### Results
 
 For the control unit part, we have achieved a fairly high accuracy. This allows the glove to translate with high precision
@@ -43,12 +45,11 @@ For the control unit part, we have achieved a fairly high accuracy. This allows 
 ![confusion_matrix](images/confusion_matrix.png)
 ![metrics](images/metrics.png)
 
-
 ## Android App
 
 The smartphone client manages the display of hazard messages in the area. Through a registration interface, we can add new gloves.
 
-Main screen: 
+Main screen:
 ![main screen](client_app/images/main.jpg)
 
 Login screen:
