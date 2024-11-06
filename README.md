@@ -43,7 +43,6 @@ Example of hand positions for lis sign language:
 For the control unit part, we have achieved a fairly high accuracy. This allows the glove to translate with high precision
 
 ![confusion_matrix](images/confusion_matrix.png)
-![metrics](images/metrics.png)
 
 ## Android App
 
